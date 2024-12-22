@@ -25,6 +25,7 @@ struct ConfirmPaymentSourceRequest: Encodable {
     private enum CardKeys: String, CodingKey {
         case number
         case expiry
+        case securityCode = "security_code"
         case billingAddress
         case name
         case attributes
@@ -73,6 +74,7 @@ struct ConfirmPaymentSourceRequest: Encodable {
         var paymentSource = topLevel.nestedContainer(keyedBy: PaymentSourceKeys.self, forKey: .paymentSource)
         var card = paymentSource.nestedContainer(keyedBy: CardKeys.self, forKey: .card)
         try card.encode(cardRequest.card.number, forKey: .number)
+        try card.encode(cardRequest.card.securityCode, forKey: .securityCode)
         try card.encode("\(cardRequest.card.expirationYear)-\(cardRequest.card.expirationMonth)", forKey: .expiry)
         try card.encodeIfPresent(cardRequest.card.cardholderName, forKey: .name)
 
