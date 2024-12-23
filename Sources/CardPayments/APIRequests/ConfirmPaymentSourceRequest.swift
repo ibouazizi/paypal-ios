@@ -75,7 +75,7 @@ struct ConfirmPaymentSourceRequest: Encodable {
         var card = paymentSource.nestedContainer(keyedBy: CardKeys.self, forKey: .card)
         try card.encode(cardRequest.card.number, forKey: .number)
         try card.encode(cardRequest.card.securityCode, forKey: .securityCode)
-        try card.encode("\(cardRequest.card.expirationYear)-\(cardRequest.card.expirationMonth)", forKey: .expiry)
+        try card.encode("20\(cardRequest.card.expirationYear)-\(cardRequest.card.expirationMonth)", forKey: .expiry)
         try card.encodeIfPresent(cardRequest.card.cardholderName, forKey: .name)
 
         if let cardBillingInfo = cardRequest.card.billingAddress {
